@@ -1,0 +1,19 @@
+[run]
+omit =
+    # Django omits
+    env/*
+    *migrations*
+    */settings*
+    */tests/*
+    */urls.py,
+    */wsgi.py,
+    */tests.py
+    manage.py,
+
+    # Custom
+    DjangoRobots/admin_config.py
+    DjangoRobots/__init__.py  
+    robots/__init__.py 
+  
+[report]
+show_missing = true

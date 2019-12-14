@@ -10,16 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from .settings_config import *
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-SITE_ID=1
+SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
@@ -107,11 +107,18 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Site specifics
+SITE_URL = '/robots.txt'
+MODULE = 'SEO Management'
+SITE_TITLE = 'Gymkhana Robots Configuration Management'
+SITE_HEADER = 'Gymkhana Robots Configuration Portal'
+DESCRIPTION = 'Django app for managing robots.txt files following the robots exclusion protocol'
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/'),
@@ -120,5 +127,3 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 X_FRAME_OPTIONS = 'DENY'
-
-from .settings_config import *
