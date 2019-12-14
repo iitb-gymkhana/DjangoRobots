@@ -26,13 +26,16 @@ class RuleAdmin(admin.ModelAdmin):
 
 
 class URLAdmin(admin.ModelAdmin):
-    exclude = ['created_by',]
-    
+    exclude = ['created_by', ]
+    list_display = ('pattern', 'created_by')
+    # TODO: Add last_updated_on after changing model
+    list_filter = ('created_by',)
+
+    # TODO: This is just a hack to send the user to the model. This should actually be done by implementing forms.
     def save_model(self, request, obj, *args, **kwargs):
         if not obj.pk:
             # Only set added_by during the first save.
             obj.created_by = request.user
-            print(request)
 
         super().save_model(request, obj, *args, **kwargs)
 

@@ -8,14 +8,21 @@ from django.contrib.auth.models import User
 
 DEFAULT_USER = 1
 
+
 @python_2_unicode_compatible
+# TODO: Used just a hacky way to save Url's with its creator at start (~/creator/url). Modify so that form will appear as (~/admin/) (input) and pass on the correct URL without modifications in backend.
 class Url(models.Model):
     """
     Defines a URL pattern for use with a robot exclusion rule. It's
     case-sensitive and exact, e.g., "/admin" and "/admin/" are different URLs.
     """
-    created_by = models.ForeignKey(User, on_delete=models.NOT_PROVIDED, default=DEFAULT_USER)
-    pattern = models.CharField(_('pattern'), max_length=255, help_text=_(
+
+    created_by = models.ForeignKey(
+        User, on_delete=models.NOT_PROVIDED, default=DEFAULT_USER, verbose_name=_('created_by'))
+
+    # TODO: Add last_updated_on
+    # For now the request fails when user inputs unique values, this will get solved once the request for created_by is sent through forms
+    pattern = models.CharField(_('pattern'), unique=True, max_length=255, help_text=_(
                                "Case-sensitive. A missing trailing slash does al"
                                "so match to files which start with the name of "
                                "the pattern, e.g., '/admin' matches /admin.html "
@@ -31,16 +38,13 @@ class Url(models.Model):
         return u("%s") % self.pattern
 
     def save(self, *args, **kwargs):
-        print("Here2!")
         usr = self.created_by.username
-
         # TODO: Using a pointer for a cleaner looking code
         if not self.pattern.startswith('/'):
             self.pattern = '/' + self.pattern
         if not self.pattern.startswith('/~' + usr):
             self.pattern = '/~' + usr + self.pattern
 
-        print(self.pattern)
         super(Url, self).save(*args, **kwargs)
 
 
