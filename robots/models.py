@@ -1,10 +1,9 @@
 from django.contrib.sites.models import Site
 from django.db import models
-from six import python_2_unicode_compatible
-from six import u
 from django.utils.text import get_text_list
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from six import python_2_unicode_compatible, u
 
 DEFAULT_USER = 1
 
@@ -19,9 +18,10 @@ class Url(models.Model):
 
     created_by = models.ForeignKey(
         User, on_delete=models.NOT_PROVIDED, default=DEFAULT_USER, verbose_name=_('created_by'))
-
+    # TODO: This will be stored as part of the custom user. Once the custom user is made, this field will be removed.
+    reverse_proxy_initial = models.CharField(max_length=20, default='')
     # TODO: Add last_updated_on
-    # For now the request fails when user inputs unique values, this will get solved once the request for created_by is sent through forms
+    # Inheritent flaw in logic: 2 users cannot take in the same pattern even for same initial. Again, will be corrected when form will show user.initial and pass the request to pattern as `user.initial + pattern`
     pattern = models.CharField(_('pattern'), unique=True, max_length=255, help_text=_(
                                "Case-sensitive. A missing trailing slash does al"
                                "so match to files which start with the name of "
@@ -35,17 +35,15 @@ class Url(models.Model):
         verbose_name_plural = _('url')
 
     def __str__(self):
-        return u("%s") % self.pattern
+        return u(self.reverse_proxy_initial + self.pattern)
 
     def save(self, *args, **kwargs):
-        usr = self.created_by.username
-        # TODO: Using a pointer for a cleaner looking code
         if not self.pattern.startswith('/'):
             self.pattern = '/' + self.pattern
-        if not self.pattern.startswith('/~' + usr):
-            self.pattern = '/~' + usr + self.pattern
-
         super(Url, self).save(*args, **kwargs)
+
+    def complete_url(self):
+        return (self.reverse_proxy_initial + self.pattern)
 
 
 @python_2_unicode_compatible
@@ -76,23 +74,23 @@ class Rule(models.Model):
                                                     "by bots."))
     sites = models.ManyToManyField(Site, verbose_name=_('sites'))
 
-    # crawl_delay = models.DecimalField(_('crawl delay'), blank=True, null=True,
-    #                                   max_digits=3, decimal_places=1, help_text=_(
-    #                                   "Between 0.1 and 99.0. This field is "
-    #                                   "supported by some search engines and "
-    #                                   "defines the delay between successive "
-    #                                   "crawler accesses in seconds. If the "
-    #                                   "crawler rate is a problem for your "
-    #                                   "server, you can set the delay up to 5 "
-    #                                   "or 10 or a comfortable value for your "
-    #                                   "server, but it's suggested to start "
-    #                                   "with small values (0.5-1), and "
-    #                                   "increase as needed to an acceptable "
-    #                                   "value for your server. Larger delay "
-    #                                   "values add more delay between "
-    #                                   "successive crawl accesses and "
-    #                                   "decrease the maximum crawl rate to "
-    #                                   "your web server."))
+    crawl_delay = models.DecimalField(_('crawl delay'), blank=True, null=True,
+                                      max_digits=3, decimal_places=1, help_text=_(
+                                      "Between 0.1 and 99.0. This field is "
+                                      "supported by some search engines and "
+                                      "defines the delay between successive "
+                                      "crawler accesses in seconds. If the "
+                                      "crawler rate is a problem for your "
+                                      "server, you can set the delay up to 5 "
+                                      "or 10 or a comfortable value for your "
+                                      "server, but it's suggested to start "
+                                      "with small values (0.5-1), and "
+                                      "increase as needed to an acceptable "
+                                      "value for your server. Larger delay "
+                                      "values add more delay between "
+                                      "successive crawl accesses and "
+                                      "decrease the maximum crawl rate to "
+                                      "your web server."))
 
     class Meta:
         verbose_name = _('rule')

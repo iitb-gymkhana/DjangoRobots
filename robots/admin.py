@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from robots.forms import RuleAdminForm
+from robots.forms import RuleAdminForm, URLForm
 from robots.models import Rule, Url
 
 # TODO: [Good Practice] Implement a new User model extending the exsiting user model
 # TODO: https://realpython.com/manage-users-in-django-admin/
+
 
 class RuleAdmin(admin.ModelAdmin):
     form = RuleAdminForm
@@ -14,10 +15,10 @@ class RuleAdmin(admin.ModelAdmin):
         (_('URL patterns'), {
             'fields': ('allowed', 'disallowed'),
         }),
-        # (_('Advanced options'), {
-        #     'classes': ('collapse',),
-        #     'fields': ('crawl_delay',),
-        # }),
+        (_('Advanced options'), {
+            'classes': ('collapse',),
+            'fields': ('crawl_delay',),
+        }),
     )
     list_filter = ('sites',)
     list_display = ('robot', 'allowed_urls', 'disallowed_urls')
@@ -26,18 +27,11 @@ class RuleAdmin(admin.ModelAdmin):
 
 
 class URLAdmin(admin.ModelAdmin):
-    exclude = ['created_by', ]
-    list_display = ('pattern', 'created_by')
+    list_display = ('complete_url', 'created_by')
     # TODO: Add last_updated_on after changing model
     list_filter = ('created_by',)
 
-    # TODO: This is just a hack to send the user to the model. This should actually be done by implementing forms.
-    def save_model(self, request, obj, *args, **kwargs):
-        if not obj.pk:
-            # Only set added_by during the first save.
-            obj.created_by = request.user
-
-        super().save_model(request, obj, *args, **kwargs)
+    form = URLForm
 
 
 admin.site.register(Url, URLAdmin)

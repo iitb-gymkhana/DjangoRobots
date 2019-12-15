@@ -1,19 +1,24 @@
 [run]
+source = .
+branch = True
+
 omit =
     # Django omits
     env/*
     *migrations*
     */settings*
-    */tests/*
-    */urls.py,
+    */tests*.py
+   # */urls.py,
     */wsgi.py,
-    */tests.py
     manage.py,
+    htmlcov/*
 
-    # Custom
-    DjangoRobots/admin_config.py
-    DjangoRobots/__init__.py  
-    robots/__init__.py 
-  
+plugins =
+    django_coverage_plugin
+
 [report]
 show_missing = true
+fail_under = 100
+skip_covered = True
+
+# https://adamj.eu/tech/2019/04/30/getting-a-django-application-to-100-percent-coverage/
