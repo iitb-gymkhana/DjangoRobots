@@ -11,110 +11,7 @@ from robots.views import RuleList
 from .base import BaseTest
 
 
-#     def setUp(self):
-#         super(BaseTest, self).setUp()
-#         usr1 = User.objects.create_user(username="usr1")
-#         usr2 = User.objects.create_user(username="usr2")
-#         site_1 = Site.objects.get(domain='example.com')
-#         site_2 = Site.objects.create(domain='https://sub.example.com')
-
-#         url_admin = Url.objects.create(
-#             pattern='/admin', created_by=usr1)
-#         url_root = Url.objects.create(pattern='/', created_by=usr2)
-#         url_media = Url.objects.create(
-#             pattern='/media', created_by=usr1)
-
-#         rule_all = Rule.objects.create(robot='*', crawl_delay=10)
-#         rule_1 = Rule.objects.create(robot='Bing', crawl_delay=20)
-#         rule_2 = Rule.objects.create(robot='Googlebot')
-
-#         rule_all.allowed.add(url_root)
-#         for url in [url_admin, url_media]:
-#             rule_all.disallowed.add(url)
-#         for site in [site_1, site_2]:
-#             rule_all.sites.add(site)
-
-#         rule_1.allowed.add(url_root)
-#         rule_1.disallowed.add(url_admin)
-#         rule_1.sites.add(site_1)
-
-#         rule_2.disallowed.add(url_media)
-#         rule_2.sites.add(site_2)
-
-#     def _test_stanzas(self, stanzas):
-#         for stanza in stanzas:
-#             if stanza.startswith('User-agent: *'):
-#                 self.assertTrue('Allow: /~usr2/' in stanza)
-#                 self.assertTrue('Disallow: /~usr1/admin' in stanza)
-#                 self.assertTrue('Disallow: /~usr1/media' in stanza)
-#                 self.assertTrue('Crawl-delay: 10' in stanza)
-#             elif stanza.startswith('User-agent: Bing'):
-#                 self.assertTrue('Allow: /~usr2/' in stanza)
-#                 self.assertTrue('Disallow: /~usr1/admin' in stanza)
-#                 self.assertFalse('Disallow: /~usr1/media' in stanza)
-#                 self.assertFalse('Crawl-delay: 10' in stanza)
-#                 self.assertTrue('Crawl-delay: 20' in stanza)
-#             elif stanza.startswith('User-agent: Googlebot'):
-#                 self.assertFalse('Allow: /~usr2/' in stanza)
-#                 self.assertFalse('Disallow: /~usr1/admin' in stanza)
-#                 self.assertTrue('Disallow: /~usr1/media' in stanza)
-#                 self.assertFalse('Crawl-delay: 10' in stanza)
-#                 self.assertFalse('Crawl-delay: 20' in stanza)
-#                 self.assertFalse('Crawl-delay' in stanza)
-#
-
-
 class ViewTest(BaseTest):
-
-    # def setUp(self):
-    #     super(BaseTest, self).setUp()
-    #     usr = User.objects.create_user(username="testUser")
-    #     site_1 = Site.objects.get(domain='example.com')
-    #     site_2 = Site.objects.create(domain='https://sub.example.com')
-
-    #     url_admin = Url.objects.create(
-    #         pattern='/admin', created_by=usr)
-    #     url_root = Url.objects.create(pattern='/', created_by=usr)
-    #     url_media = Url.objects.create(
-    #         pattern='/media', created_by=usr)
-
-    #     rule_all = Rule.objects.create(robot='*', crawl_delay=10)
-    #     rule_1 = Rule.objects.create(robot='Bing', crawl_delay=20)
-    #     rule_2 = Rule.objects.create(robot='Googlebot')
-
-    #     rule_all.allowed.add(url_root)
-    #     for url in [url_admin, url_media]:
-    #         rule_all.disallowed.add(url)
-    #     for site in [site_1, site_2]:
-    #         rule_all.sites.add(site)
-
-    #     rule_1.allowed.add(url_root)
-    #     rule_1.disallowed.add(url_admin)
-    #     rule_1.sites.add(site_1)
-
-    #     rule_2.disallowed.add(url_media)
-    #     rule_2.sites.add(site_2)
-
-    # def _test_stanzas(self, stanzas):
-    #     for stanza in stanzas:
-    #         if stanza.startswith('User-agent: *'):
-    #             self.assertTrue('Allow: /' in stanza)
-    #             self.assertTrue('Disallow: /admin' in stanza)
-    #             self.assertTrue('Disallow: /media' in stanza)
-    #             self.assertTrue('Crawl-delay: 10' in stanza)
-    #         elif stanza.startswith('User-agent: Bing'):
-    #             self.assertTrue('Allow: /' in stanza)
-    #             self.assertTrue('Disallow: /admin' in stanza)
-    #             self.assertFalse('Disallow: /media' in stanza)
-    #             self.assertFalse('Crawl-delay: 10' in stanza)
-    #             self.assertTrue('Crawl-delay: 20' in stanza)
-    #         elif stanza.startswith('User-agent: Googlebot'):
-    #             self.assertFalse('Allow: /' in stanza)
-    #             self.assertFalse('Disallow: /admin' in stanza)
-    #             self.assertTrue('Disallow: /media' in stanza)
-    #             self.assertFalse('Crawl-delay: 10' in stanza)
-    #             self.assertFalse('Crawl-delay: 20' in stanza)
-    #             self.assertFalse('Crawl-delay' in stanza)
 
     def setUp(self):
         super(BaseTest, self).setUp()
@@ -146,27 +43,6 @@ class ViewTest(BaseTest):
 
         rule_2.disallowed.add(url_media)
         rule_2.sites.add(site_2)
-
-    # def _test_stanzas(self, stanzas):
-    #     for stanza in stanzas:
-    #         if stanza.startswith('User-agent: *'):
-    #             self.assertTrue('Allow: /~usr2/' in stanza)
-    #             self.assertTrue('Disallow: /~usr1/admin' in stanza)
-    #             self.assertTrue('Disallow: /~usr1/media' in stanza)
-    #             self.assertTrue('Crawl-delay: 10' in stanza)
-    #         elif stanza.startswith('User-agent: Bing'):
-    #             self.assertTrue('Allow: /~usr2/' in stanza)
-    #             self.assertTrue('Disallow: /~usr1/admin' in stanza)
-    #             self.assertFalse('Disallow: /~usr1/media' in stanza)
-    #             self.assertFalse('Crawl-delay: 10' in stanza)
-    #             self.assertTrue('Crawl-delay: 20' in stanza)
-    #         elif stanza.startswith('User-agent: Googlebot'):
-    #             self.assertFalse('Allow: /~usr2/' in stanza)
-    #             self.assertFalse('Disallow: /~usr1/admin' in stanza)
-    #             self.assertTrue('Disallow: /~usr1/media' in stanza)
-    #             self.assertFalse('Crawl-delay: 10' in stanza)
-    #             self.assertFalse('Crawl-delay: 20' in stanza)
-    #             self.assertFalse('Crawl-delay' in stanza)
 
     def _test_stanzas(self, stanzas):
         for stanza in stanzas:
@@ -205,16 +81,16 @@ class ViewTest(BaseTest):
         response = view_obj.render_to_response(context)
         response.render()
         content = force_text(response.content)
-        if settings.ROBOTS_USE_SITEMAP:
-            self.assertTrue(
-                'Sitemap: http://example.com/sitemap.xml' in content)
-        # else pass as giving a custom input for sitemap
+        print(content)
+        # if settings.ROBOTS_USE_SITEMAP:
+        self.assertTrue(
+            'Sitemap: http://example.com/sitemap.xml' in content)
         stanzas = content.split('\n\n')
         self._test_stanzas(stanzas)
 
-    def est_view_site_2(self):
+    def test_view_site_2(self):
         request = self.get_request(
-            path='/robots.txt', user=AnonymousUser(), lang='en')
+            path='/', user=AnonymousUser(), lang='en')
 
         view_obj = RuleList()
         view_obj.request = request
@@ -229,15 +105,16 @@ class ViewTest(BaseTest):
         response = view_obj.render_to_response(context)
         response.render()
         content = force_text(response.content)
+        # if settings.ROBOTS_USE_SITEMAP:
         self.assertTrue(
             'Sitemap: https://sub.example.com/sitemap.xml' in content)
         self.assertTrue('Host: https://sub.example.com' in content)
         stanzas = content.split('\n\n')
         self._test_stanzas(stanzas)
 
-    def est_use_scheme_in_host_setting(self):
+    def test_use_scheme_in_host_setting(self):
         request = self.get_request(
-            path='/robots.txt', user=AnonymousUser(), lang='en')
+            path='/', user=AnonymousUser(), lang='en')
 
         view_obj = RuleList()
         view_obj.request = request
@@ -268,7 +145,7 @@ class ViewTest(BaseTest):
             content = force_text(response.content)
             self.assertFalse('Host: example.com' in content)
 
-    def est_cached_sitemap(self):
+    def test_cached_sitemap(self):
         request = self.get_request(path='/', user=AnonymousUser(), lang='en')
 
         view_obj = RuleList()
@@ -279,7 +156,9 @@ class ViewTest(BaseTest):
         response = view_obj.render_to_response(context)
         response.render()
         content = force_text(response.content)
-        self.assertTrue('Sitemap: http://example.com/sitemap.xml' in content)
+        # if settings.ROBOTS_USE_SITEMAP:
+        self.assertTrue(
+            'Sitemap: http://example.com/sitemap.xml' in content)
 
         with self.settings(ROBOTS_SITEMAP_VIEW_NAME='cached-sitemap'):
             context = view_obj.get_context_data(
@@ -287,5 +166,6 @@ class ViewTest(BaseTest):
             response = view_obj.render_to_response(context)
             response.render()
             content = force_text(response.content)
-            self.assertTrue(
-                'Sitemap: http://example.com/other/sitemap.xml' in content)
+        # if settings.ROBOTS_USE_SITEMAP:
+        self.assertTrue(
+            'Sitemap: http://example.com/other/sitemap.xml' in content)

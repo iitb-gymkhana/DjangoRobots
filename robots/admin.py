@@ -27,7 +27,7 @@ class RuleAdmin(admin.ModelAdmin):
 
 
 class URLAdmin(admin.ModelAdmin):
-    list_display = ('complete_url', 'created_by')
+    list_display = ('__str__', 'created_by')
     # TODO: Add last_updated_on after changing model
     list_filter = ('created_by',)
 

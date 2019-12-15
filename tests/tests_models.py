@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import AnonymousUser, User
-from .models import Url
+from robots.models import Url
 
 
 class UrlModelTestCase(TestCase):
@@ -25,28 +25,3 @@ class UrlModelTestCase(TestCase):
 
 class RuleModelTestCase(TestCase):
     pass
-
-
-# from django.test import LiveServerTestCase
-# from selenium.webdriver.firefox.webdriver import WebDriver
-
-# # https://www.valentinog.com/blog/testing-django/
-# class URLApp(LiveServerTestCase):
-
-#     @classmethod
-#     def setUpClass(cls):
-#         super().setUpClass()
-#         cls.selenium = WebDriver()
-
-#     @classmethod
-#     def tearDownClass(cls):
-#         cls.selenium.quit()
-#         super().tearDownClass()
-
-#     def test_as_a_user(self):
-#         pass
-#         # visit /url
-#         # find url's inside the page
-#         # click on add url
-#         # Enter a random url
-#         # check if it is saved as /~logged_in_user/random_url

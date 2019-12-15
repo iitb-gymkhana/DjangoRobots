@@ -17,7 +17,7 @@
 # from django.test import SimpleTestCase, TestCase
 # from django.test.utils import isolate_apps
 
-# from .models import Url
+# from robots.models import Url
 
 
 # class MockRequest:

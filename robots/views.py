@@ -13,6 +13,8 @@ else:
     from django.urls import NoReverseMatch, reverse
 
 # TODO: limit access of object to its creator
+
+
 class RuleList(ListView):
     """
     Returns a generated robots.txt file with correct mimetype (text/plain),
@@ -95,4 +97,3 @@ class RuleList(ListView):
 
 
 rules_list = RuleList.as_view()
-

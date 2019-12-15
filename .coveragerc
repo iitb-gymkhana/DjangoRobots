@@ -13,9 +13,6 @@ omit =
     manage.py,
     htmlcov/*
 
-plugins =
-    django_coverage_plugin
-
 [report]
 show_missing = true
 fail_under = 100

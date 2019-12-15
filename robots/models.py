@@ -36,14 +36,13 @@ class Url(models.Model):
 
     def __str__(self):
         return u(self.reverse_proxy_initial + self.pattern)
+    # TODO: Check if this method is correct or can be referenced in admin.py without the short description
+    __str__.short_description = _('complete_url')
 
     def save(self, *args, **kwargs):
         if not self.pattern.startswith('/'):
             self.pattern = '/' + self.pattern
         super(Url, self).save(*args, **kwargs)
-
-    def complete_url(self):
-        return (self.reverse_proxy_initial + self.pattern)
 
 
 @python_2_unicode_compatible
