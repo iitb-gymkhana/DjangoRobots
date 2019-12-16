@@ -2,7 +2,7 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.text import get_text_list
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+from django.conf import settings
 from six import python_2_unicode_compatible, u
 
 DEFAULT_USER = 1
@@ -17,7 +17,7 @@ class Url(models.Model):
     """
 
     created_by = models.ForeignKey(
-        User, on_delete=models.NOT_PROVIDED, default=DEFAULT_USER, verbose_name=_('created_by'))
+        settings.AUTH_USER_MODEL, on_delete=models.NOT_PROVIDED, default=DEFAULT_USER, verbose_name=_('creator'))
     # TODO: This will be stored as part of the custom user. Once the custom user is made, this field will be removed.
     reverse_proxy_initial = models.CharField(max_length=20, default='')
     # TODO: Add last_updated_on
