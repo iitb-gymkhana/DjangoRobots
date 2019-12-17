@@ -17,19 +17,19 @@ class RuleAdminForm(forms.ModelForm):
         return self.cleaned_data
 
 
-class URLForm(forms.ModelForm):
-    # TODO: Check if user is superuser to allow for changes
+class UrlForm(forms.ModelForm):
+    # TODO: Any Chance to use forms.MultiValueField with initial input of "/user"?
+    # TODO: Add a custom validation for URLs
 
-    # TODO: Add default as user.username
+    def __init__(self, *args, **kwargs):
+        super(UrlForm, self).__init__(*args, **kwargs)
+        self.fields['reverse_proxy_initial'].initial = self.current_user.userprofile.proxy
+        if not self.current_user.is_superuser:
+            self.fields['reverse_proxy_initial'].disabled = True
+
     reverse_proxy_initial = forms.CharField(
-        disabled=True,  max_length=20, label="Initial", initial='/')
+        max_length=20, label='Initial')
 
     class Meta:
         model = Url
         exclude = ('created_by',)
-
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        # Should actually be set while rendering for the first time and not while saving. Solve the previous TODO
-        form.instance.reverse_proxy_initial = self.request.user.username
-        return super().form_valid(form)

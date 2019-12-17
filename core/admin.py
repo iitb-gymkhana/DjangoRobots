@@ -17,6 +17,8 @@ class UserProfileInline(admin.StackedInline):
 class UserAdmin(BaseUserAdmin):
     # TODO: Move Userprofile section below personal info
     inlines = (UserProfileInline,)
+    # Add proxy(User profile) on admin page
+    list_display = ('username', 'email', 'is_staff',)
 
 
 # Re-register UserAdmin

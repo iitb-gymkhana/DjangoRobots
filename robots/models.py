@@ -5,23 +5,21 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from six import python_2_unicode_compatible, u
 
-DEFAULT_USER = 1
-
 
 @python_2_unicode_compatible
-# TODO: Used just a hacky way to save Url's with its creator at start (~/creator/url). Modify so that form will appear as (~/admin/) (input) and pass on the correct URL without modifications in backend.
+
 class Url(models.Model):
     """
     Defines a URL pattern for use with a robot exclusion rule. It's
     case-sensitive and exact, e.g., "/admin" and "/admin/" are different URLs.
     """
-
-    created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.NOT_PROVIDED, default=DEFAULT_USER, verbose_name=_('creator'))
-    # TODO: This will be stored as part of the custom user. Once the custom user is made, this field will be removed.
-    reverse_proxy_initial = models.CharField(max_length=20, default='')
     # TODO: Add last_updated_on
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.NOT_PROVIDED, verbose_name=_('creator'), blank=False)
+
+    reverse_proxy_initial = models.CharField(max_length=20, default='')
     # Inheritent flaw in logic: 2 users cannot take in the same pattern even for same initial. Again, will be corrected when form will show user.initial and pass the request to pattern as `user.initial + pattern`
+    # See MultiValueField forms
     pattern = models.CharField(_('pattern'), unique=True, max_length=255, help_text=_(
                                "Case-sensitive. A missing trailing slash does al"
                                "so match to files which start with the name of "
@@ -36,8 +34,6 @@ class Url(models.Model):
 
     def __str__(self):
         return u(self.reverse_proxy_initial + self.pattern)
-    # TODO: Check if this method is correct or can be referenced in admin.py without the short description
-    __str__.short_description = _('complete_url')
 
     def save(self, *args, **kwargs):
         if not self.pattern.startswith('/'):

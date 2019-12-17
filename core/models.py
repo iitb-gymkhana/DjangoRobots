@@ -10,3 +10,9 @@ class UserProfile(models.Model):
     # validate_comma_separated_integer_list for alt_domain
     alt_domain = models.CharField(
         max_length=100, blank=True, verbose_name="Alternate domains", help_text="If more than one domain, seperate by a comma(,)")
+
+    # TODO: Do not allow user to change his own profile
+    def save(self, *args, **kwargs):
+        if not self.proxy.startswith('/'):
+            self.proxy = '/' + self.proxy
+        super(UserProfile, self).save(*args, **kwargs)
