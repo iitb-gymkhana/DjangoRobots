@@ -11,7 +11,8 @@
 #     AdminDateWidget, AdminRadioSelect, AutocompleteSelect,
 #     AutocompleteSelectMultiple,
 # )
-# from django.contrib.auth.models import User
+# from django.conf import settings
+# settings.AUTH_USER_MODEL
 # from django.db import models
 # from django.forms.widgets import Select
 # from django.test import SimpleTestCase, TestCase

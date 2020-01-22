@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import AnonymousUser, User
 from robots.models import Url
+from django.contrib.auth import get_user_model
 
 
 class UrlModelTestCase(TestCase):

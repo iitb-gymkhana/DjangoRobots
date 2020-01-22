@@ -1,1 +1,46 @@
 # Add multiple url's at once
+# Write some tests
+# Setup the workflow with github actions
+https://medium.com/@vanflymen/blazing-fast-ci-with-github-actions-poetry-black-and-pytest-9e74299dd4a5
+
+# Add password reset procedure: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication#Password_reset_templates
+
+
+# forms.py
+    # def __init__(self, *args, **kwargs):
+    #     self.user = kwargs.pop('user', None)
+    #     super(UrlForm, self).__init__(*args, **kwargs)
+
+# admin.py
+# TODO: This is just a hack to send the user to the model. This should actually be done by implementing forms.
+    # def save_model(self, request, obj, *args, **kwargs):
+    #     if not obj.pk:
+    # Only set created_by during the first save.
+    # obj.created_by = request.user
+
+    # super().save_model(request, obj, *args, **kwargs)
+
+tests_models.py
+    # from django.test import LiveServerTestCase
+    # from selenium.webdriver.firefox.webdriver import WebDriver
+
+    # # https://www.valentinog.com/blog/testing-django/
+    # class URLApp(LiveServerTestCase):
+
+    #     @classmethod
+    #     def setUpClass(cls):
+    #         super().setUpClass()
+    #         cls.selenium = WebDriver()
+
+    #     @classmethod
+    #     def tearDownClass(cls):
+    #         cls.selenium.quit()
+    #         super().tearDownClass()
+
+    #     def test_as_a_user(self):
+    #         pass
+    #         # visit /url
+    #         # find url's inside the page
+    #         # click on add url
+    #         # Enter a random url
+    #         # check if it is saved as /~logged_in_user/random_url

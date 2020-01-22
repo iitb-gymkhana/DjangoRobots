@@ -21,5 +21,6 @@ from django.views.generic import TemplateView
 urlpatterns = [
     url(r'^robots\.txt', include('robots.urls')),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    # path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -2,10 +2,11 @@ import django
 from django.contrib.sitemaps import views as sitemap_views
 from django.contrib.sites.models import Site
 from django.views.decorators.cache import cache_page
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 
 from robots import settings
 from robots.models import Rule, Url
+from robots.forms import UrlForm
 
 if django.VERSION[:2] >= (2, 0):
     from django.urls import NoReverseMatch, reverse
@@ -96,4 +97,22 @@ class RuleList(ListView):
         return cache_decorator(super_dispatch)(request, *args, **kwargs)
 
 
+class UrlView(TemplateView):
+    form_class = UrlForm
+    template_name = "form.html"
+
+    def post(self, request, *args, **kwargs):
+        # TODO: Make this work somehow (without template if possible)
+        updated_request = request.POST.copy()
+        proxy = updated_request['reverse_proxy_initial']
+        pattern = updated_request['pattern']
+        print(proxy)
+        print('k,o')
+        updated_request.update({'pattern': proxy + pattern})
+        search_packages_form = SearchPackagesForm(updated_request)
+
+        return render(request, self.template_name, {'form': self.form_class})
+
+
+url_view = UrlView.as_view()
 rules_list = RuleList.as_view()

@@ -4,9 +4,8 @@ from core.models import UserProfile
 from django.contrib.auth.models import User
 
 
-# Define an inline admin descriptor for Employee model
-# which acts a bit like a singleton
 class UserProfileInline(admin.StackedInline):
+    """ Define an inline admin descriptor for User Profile which acts a bit like a singleton """
     model = UserProfile
     can_delete = False
     verbose_name = 'User Profile'
